@@ -1,9 +1,11 @@
+#imports
 import numpy as np
 import matplotlib.pyplot as plt
 import datetime
-
 from sphere import sphere
 from texture import texture
+from light import light
+
 
 startTime = datetime.datetime.now()
 
@@ -32,13 +34,14 @@ camera = np.array([0, 0, 1])
 ratio = float(width) / height
 screen = (-1, 1 / ratio, 1, -1 / ratio) # left, top, right, bottom
 ### class 
-light = { 'position': np.array([5, 5, 5]), 'ambient': np.array([1, 1, 1]), 'diffuse': np.array([1, 1, 1]), 'specular': np.array([1, 1, 1]) }
+
+source = light(np.array([5, 5, 5]), texture(np.array([1, 1, 1]), np.array([1, 1, 1]), np.array([1, 1, 1]), 0, 0))
 
 objects = [
     sphere( np.array([0.1, -0.3, 0]), 0.1, texture(np.array([0.1, 0, 0.1]), np.array([0.7, 0, 0.7]), np.array([1, 1, 1]), 100, 0.5) ),
-    #sphere( np.array([-0.2, 0, -1]), 0.7, np.array([0.1, 0, 0]), np.array([0.7, 0, 0]), np.array([1, 1, 1]), 100, 0.5 ),
-    #sphere( np.array([-0.3, 0, 0]), 0.15, np.array([0, 0.1, 0]), np.array([0, 0.6, 0]), np.array([1, 1, 1]), 100, 0.5 ),
-    #sphere( np.array([0, -9000, 0]), 9000 - 0.7, np.array([0.1, 0.1, 0.1]), np.array([0.6, 0.6, 0.6]), np.array([1, 1, 1]), 100, 0.5 )
+    sphere( np.array([-0.2, 0, -1]), 0.7, texture(np.array([0.1, 0, 0]), np.array([0.7, 0, 0]), np.array([1, 1, 1]), 100, 0.5 )),
+    sphere( np.array([-0.3, 0, 0]), 0.15, texture(np.array([0, 0.1, 0]), np.array([0, 0.6, 0]), np.array([1, 1, 1]), 100, 0.5 )),
+    sphere( np.array([0, -9000, 0]), 9000 - 0.7, texture(np.array([0.1, 0.1, 0.1]), np.array([0.6, 0.6, 0.6]), np.array([1, 1, 1]), 100, 0.5 ))
     
 ]
 
@@ -63,10 +66,10 @@ for i, y in enumerate(np.linspace(screen[1], screen[3], height)):
             intersection = origin + min_distance * direction
             normal_to_surface = normalize(intersection - nearest_object.centre)
             shifted_point = intersection + 1e-5 * normal_to_surface
-            intersection_to_light = normalize(light['position'] - shifted_point)
+            intersection_to_light = normalize(source.position - shifted_point)
 
             nearest_distance, min_distance = nearest_intersected_object(objects, shifted_point, intersection_to_light)
-            intersection_to_light_distance = np.linalg.norm(light['position'] - intersection)
+            intersection_to_light_distance = np.linalg.norm(source.position - intersection)
             is_shadowed = min_distance < intersection_to_light_distance
 
             if is_shadowed:
@@ -75,15 +78,15 @@ for i, y in enumerate(np.linspace(screen[1], screen[3], height)):
             illumination = np.zeros((3))
 
             # ambiant
-            illumination += nearest_object.texture.ambient * light['ambient']
+            illumination += nearest_object.texture.ambient * source.texture.ambient
 
             # diffuse
-            illumination += nearest_object.texture.diffuse * light['diffuse'] * np.dot(intersection_to_light, normal_to_surface)
+            illumination += nearest_object.texture.diffuse * source.texture.diffuse * np.dot(intersection_to_light, normal_to_surface)
 
             # specular
             intersection_to_camera = normalize(camera - intersection)
             H = normalize(intersection_to_light + intersection_to_camera)
-            illumination += nearest_object.texture.specular * light['specular'] * np.dot(normal_to_surface, H) ** (nearest_object.texture.shininess / 4)
+            illumination += nearest_object.texture.specular * source.texture.specular * np.dot(normal_to_surface, H) ** (nearest_object.texture.shininess / 4)
 
             # reflection
             color += reflection * illumination
