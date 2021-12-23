@@ -10,5 +10,5 @@ class rectangle:
         self.height  = tright[1] - bleft[1]
         self.depth   = tright[2] - bleft[2]
     
-    def intersect():
+#    def intersect():
         
