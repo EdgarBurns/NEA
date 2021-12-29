@@ -36,8 +36,8 @@ light = { 'position': np.array([5, 5, 5]), 'ambient': np.array([1, 1, 1]), 'diff
 objects = [
     sphere( np.array([0.1, -0.3, 0]), 0.1, np.array([0.1, 0, 0.1]), np.array([0.7, 0, 0.7]), np.array([1, 1, 1]), 100, 0.5 ),
     sphere( np.array([-0.2, 0, -1]), 0.7, np.array([0.1, 0, 0]), np.array([0.7, 0, 0]), np.array([1, 1, 1]), 100, 0.5 ),
-    #sphere( np.array([-0.3, 0, 0]), 0.15, np.array([0, 0.1, 0]), np.array([0, 0.6, 0]), np.array([1, 1, 1]), 100, 0.5 ),
-    #sphere( np.array([0, -9000, 0]), 9000 - 0.7, np.array([0.1, 0.1, 0.1]), np.array([0.6, 0.6, 0.6]), np.array([1, 1, 1]), 100, 0.5 )
+    sphere( np.array([-0.3, 0, 0]), 0.15, np.array([0, 0.1, 0]), np.array([0, 0.6, 0]), np.array([1, 1, 1]), 100, 0.5 ),
+    sphere( np.array([0, -9000, 0]), 9000 - 0.7, np.array([0.1, 0.1, 0.1]), np.array([0.6, 0.6, 0.6]), np.array([1, 1, 1]), 100, 0.5 )
     
 ]
 

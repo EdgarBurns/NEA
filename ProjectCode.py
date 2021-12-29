@@ -2,7 +2,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import datetime
-from sphere import sphere
+from sphere import norm, sphere
 from texture import texture
 from light import light
 
@@ -10,7 +10,7 @@ from light import light
 startTime = datetime.datetime.now()
 
 def normalize(vector):
-    return vector / np.linalg.norm(vector)
+    return vector / norm(vector)
 
 def reflected(vector, axis):
     return vector - 2 * np.dot(vector, axis) * axis
@@ -69,7 +69,7 @@ for i, y in enumerate(np.linspace(screen[1], screen[3], height)):
             intersection_to_light = normalize(source.position - shifted_point)
 
             nearest_distance, min_distance = nearest_intersected_object(objects, shifted_point, intersection_to_light)
-            intersection_to_light_distance = np.linalg.norm(source.position - intersection)
+            intersection_to_light_distance = norm(source.position - intersection)
             is_shadowed = min_distance < intersection_to_light_distance
 
             if is_shadowed:

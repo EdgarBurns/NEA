@@ -1,5 +1,5 @@
 import numpy as np
-import texture
+
 class sphere:
     def __init__(self, centre, radius, ambient, diffuse, specular, shininess, reflection):
         self.centre = centre
