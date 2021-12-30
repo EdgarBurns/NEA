@@ -1,14 +1,7 @@
 import numpy as np
 import numba as nb
 import texture
-
-@nb.njit(fastmath=True)
-def norm(l):
-    s = 0.
-    for i in range(l.shape[0]):
-        s += l[i]**2
-    return np.sqrt(s)
-
+from utility import norm
 class sphere:
     
     def __init__(self, centre, radius, texture):
