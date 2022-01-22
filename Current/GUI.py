@@ -1,5 +1,4 @@
 from tkinter import *
-import tkinter
 from PIL import ImageTk, Image
 import ray_trace
 from sphere import sphere
@@ -33,17 +32,17 @@ def add_sphere():
 
 
 t = ray_trace.tracer()
-root = tkinter.Tk()  
+root = Tk()  
 i = Image.open("Current\image.png")
 display = ImageTk.PhotoImage(i, master=root)
-rendered_shapes = tkinter.Label(root, image=display)
+rendered_shapes = Label(root, image=display)
 rendered_shapes.grid(row=0)
 
-btn_refresh = tkinter.Button(root, text='Refresh',width= 25, command=refresh_image)
+btn_refresh = Button(root, text='Refresh',width= 25, command=refresh_image)
 btn_refresh.grid(row=5, column = 0)
 #refresh.pack( side = BOTTOM)
 
-btn_new_sphere = tkinter.Button(root, text= 'new sphere', width = 25, command=add_sphere)
+btn_new_sphere = Button(root, text= 'new sphere', width = 25, command=add_sphere)
 
 btn_new_sphere.grid(row=5, column = 1)
 #new_sphere.pack(side = BOTTOM)
