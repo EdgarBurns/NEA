@@ -29,7 +29,7 @@ class triangle:
         
         self.texture.display()
 
-    def shapenormal(self):
+    def shapenormal(self,intersection):
         return self.normal
 
     @nb.njit(fastmath=False)

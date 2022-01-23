@@ -1,7 +1,8 @@
 import numpy as np
 import numba as nb
 import texture
-from utility import norm
+from utility import norm, normalize
+
 class sphere:
     
     def __init__(self, centre, radius, texture):
@@ -9,6 +10,10 @@ class sphere:
         self.radius = radius
         self.texture = texture
 
+    def shapenormal(self,intersection):
+        return normalize(intersection - self.centre)
+        
+        
     def display(self):
         
         print(self.centre)

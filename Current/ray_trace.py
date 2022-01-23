@@ -5,15 +5,11 @@ import datetime
 from sphere import sphere
 from texture import texture
 from light import light
-from utility import norm
+from utility import norm, normalize, reflected
 
 startTime = datetime.datetime.now()
 
-def normalize(vector):
-    return vector / norm(vector)
 
-def reflected(vector, axis):
-    return vector - 2 * np.dot(vector, axis) * axis
 
 def nearest_intersected_object(objects, ray_origin, ray_direction):
     distances = [obj.intersect(ray_origin, ray_direction) for obj in objects]
@@ -66,7 +62,7 @@ class tracer:
                         break
 
                     intersection = origin + min_distance * direction
-                    normal_to_surface = normalize(intersection - nearest_object.centre)
+                    normal_to_surface = nearest_object.shapenormal(intersection)
                     shifted_point = intersection + 1e-5 * normal_to_surface
                     intersection_to_light = normalize(self.source.position - shifted_point)
 
