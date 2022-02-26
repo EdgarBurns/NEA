@@ -1,7 +1,6 @@
 import numpy as np
-import numba as nb
 import texture
-from utility import norm
+from utility import norm, normalize
 class sphere:
     
     def __init__(self, centre, radius, texture):
@@ -20,7 +19,12 @@ class sphere:
         print(self.texture.shininess)  
         print(self.texture.reflection)  
 
+    def shapenormal(self, intersection):
+
+        return normalize(intersection - self.centre)
+
     def intersect(self, ray_origin, ray_direction):
+
         b = 2 * np.dot(ray_direction, ray_origin - self.centre)
         c = norm(ray_origin - self.centre) ** 2 - self.radius ** 2
         delta = b ** 2 - 4 * c
